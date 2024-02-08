@@ -155,7 +155,7 @@ $color3: rgb(0, 104, 136);
 .back-btn {
   @include square(2.5rem);
   background-color: $color2;
-  color: $color1;
+  color: $color3;
   @include flex;
   position: absolute;
   top: 10px;
@@ -166,12 +166,11 @@ $color3: rgb(0, 104, 136);
   @include baseShadow;
 
   svg {
-      transition: all 0.3s;
+    transition: all 0.3s;
   }
-  padding-left: 3rem;
-  padding-right: 3rem;
+
   &:hover svg {
-      translate: -0.25rem;
+    translate: -0.25rem;
   }
 }
 

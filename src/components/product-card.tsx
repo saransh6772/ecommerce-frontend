@@ -16,7 +16,7 @@ const ProductCard = ({productId,name,photo,stock,price,handler}:ProductsProps) =
     <div className="product-card">
         <img src={`${server}/${photo}`} alt={name} />
         <p>{name}</p>
-        <span>${price}</span>
+        <span>{price}</span>
         <div>
             <button onClick={()=>handler({productId,price,name,photo,stock,quantity:1})}>
                 <FaPlus />

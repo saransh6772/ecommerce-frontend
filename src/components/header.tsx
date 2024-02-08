@@ -33,7 +33,7 @@ const Header = ({user}:PropsType) => {
                     <FaUser/>
                 </button>
                 <dialog open={isOpen}>
-                    <div>{user.role === "admin"&&(
+                    <div>{(user.role === "admin"||user.role === "user")&&(
                         <Link onClick={()=>setIsOpen(false)} to="/admin/dashboard">Admin</Link>
                     )}
                     <Link onClick={()=>setIsOpen(false)} to="/orders">Orders</Link>

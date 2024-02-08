@@ -41,7 +41,7 @@ const TransactionManagement = lazy(
 );
 
 export const App = () => {
-  const {user,loading}=useSelector((state:{userReducer:UserReducerInitialState})=>state.userReducer)
+  const { user, loading } = useSelector((state: { userReducer: UserReducerInitialState }) => state.userReducer)
   const dispatch = useDispatch();
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
@@ -54,12 +54,12 @@ export const App = () => {
       }
     })
   }, [])
-  return loading?(
-  <Loader />
-  ):(
+  return loading ? (
+    <Loader />
+  ) : (
     <Router>
       {/* {Header} */}
-      <Header user={user}/>
+      <Header user={user} />
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -68,13 +68,13 @@ export const App = () => {
 
           {/* {not logged in route} */}
           <Route path="/login" element={
-            <ProtectedRoute isAuthenticated={user?false:true}>
+            <ProtectedRoute isAuthenticated={user ? false : true}>
               <Login />
             </ProtectedRoute>
           } />
 
           {/* {logged in user routes} */}
-          <Route element={<ProtectedRoute isAuthenticated={user?true:false}/>}>
+          <Route element={<ProtectedRoute isAuthenticated={user ? true : false} />}>
             <Route path="/shipping" element={<Shipping />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/order/:id" element={<OrderDetails />} />
@@ -82,23 +82,25 @@ export const App = () => {
           </Route>
 
           {/* {admin routes} */}
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+          {/* Charts */}
+          <Route path="/admin/chart/bar" element={<Barcharts />} />
+          <Route path="/admin/chart/pie" element={<Piecharts />} />
+          <Route path="/admin/chart/line" element={<Linecharts />} />
+          {/* Apps */}
+          <Route path="/admin/app/coupon" element={<Coupon />} />
+          <Route path="/admin/app/stopwatch" element={<Stopwatch />} />
+          <Route path="/admin/app/toss" element={<Toss />} />
           <Route
-          element={
-            <ProtectedRoute isAuthenticated={true} adminOnly={true} admin={user?.role==="admin"?true:false} />
-          }
+            element={
+              <ProtectedRoute isAuthenticated={true} adminOnly={true} admin={user?.role === "admin" ? true : false} />
+            }
           >
-            <Route path="/admin/dashboard" element={<Dashboard />} />
+
             <Route path="/admin/product" element={<Products />} />
             <Route path="/admin/customer" element={<Customers />} />
             <Route path="/admin/transaction" element={<Transaction />} />
-            {/* Charts */}
-            <Route path="/admin/chart/bar" element={<Barcharts />} />
-            <Route path="/admin/chart/pie" element={<Piecharts />} />
-            <Route path="/admin/chart/line" element={<Linecharts />} />
-            {/* Apps */}
-            <Route path="/admin/app/coupon" element={<Coupon />} />
-            <Route path="/admin/app/stopwatch" element={<Stopwatch />} />
-            <Route path="/admin/app/toss" element={<Toss />} />
+
 
             {/* Management */}
             <Route path="/admin/product/new" element={<NewProduct />} />
@@ -107,7 +109,7 @@ export const App = () => {
 
             <Route path="/admin/transaction/:id" element={<TransactionManagement />} />
           </Route>
-          <Route path="*" element={<NotFound/>}></Route>
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </Suspense>
       <Toaster position="bottom-center" />

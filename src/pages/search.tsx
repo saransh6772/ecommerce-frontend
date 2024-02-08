@@ -22,7 +22,7 @@ const Search = () => {
     dispatch(addToCart(cartItem));
     toast.success("added to cart")
   }
-  const isNextPage = page < 4;
+  const isNextPage = page < searchedData?.totalPage!||1;
   const isPrevPage = page > 1;
   console.log(searchedData)
   if (isError) toast.error((error as CustomError).data.message)
