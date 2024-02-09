@@ -15,16 +15,13 @@ const Search = () => {
   const [maxPrice, setMaxPrice] = useState(100000);
   const [category, setCategory] = useState("")
   const [page, setPage] = useState(1);
-  const { isLoading: productLoading, data: searchedData,isError:productIsError,error:productError } = useSearchProductsQuery({ search, sort, price: maxPrice, category, page })
-  const dispatch=useDispatch()
-  const addToCartHandler=(cartItem:CartItem)=>{
-    if(cartItem.stock<1)return toast.error("out of stock");
+  const { isLoading: productLoading, data: searchedData, isError: productIsError, error: productError } = useSearchProductsQuery({ search, sort, price: maxPrice, category, page })
+  const dispatch = useDispatch()
+  const addToCartHandler = (cartItem: CartItem) => {
+    if (cartItem.stock < 1) return toast.error("out of stock");
     dispatch(addToCart(cartItem));
     toast.success("added to cart")
   }
-  const isNextPage = page < searchedData?.totalPage!||1;
-  const isPrevPage = page > 1;
-  console.log(searchedData)
   if (isError) toast.error((error as CustomError).data.message)
   if (productIsError) toast.error((productError as CustomError).data.message)
   return (
@@ -60,7 +57,7 @@ const Search = () => {
         <input type="text" placeholder="Search by name..." value={search} onChange={(e) => setSearch(e.target.value)} />
         {
           productLoading ? (
-            <Skeleton length={10}/>
+            <Skeleton length={10} />
           ) : (<div className="search-product-list">
             {
               searchedData?.products.map((i) => (
@@ -72,9 +69,9 @@ const Search = () => {
         {
           searchedData && searchedData.totalPage > 1 &&
           (<article>
-            <button disabled={!isPrevPage} onClick={() => setPage((prev) => prev - 1)}>Prev</button>
+            <button disabled={page == 1} onClick={() => setPage((prev) => prev - 1)}>Prev</button>
             <span>{page} of {searchedData.totalPage}</span>
-            <button disabled={!isNextPage} onClick={() => setPage((prev) => prev + 1)}>Next</button>
+            <button disabled={page == searchedData.totalPage} onClick={() => setPage((prev) => prev + 1)}>Next</button>
           </article>)
         }
       </main>
